@@ -1,2 +1,23 @@
 #!/usr/bin/env python3
 
+import pygame
+import pygame_gui
+
+# local files
+import vierGewinntController
+import vierGewinntModel
+import vierGewinntView
+
+
+# Constants 
+SCREEN_WIDTH = 900
+TILE_LENGTH = 100
+SCREEN_HEIGHT = SCREEN_WIDTH
+GRID_HEIGHT = TILE_LENGTH * 6
+GRID_WIDTH = TILE_LENGTH * 7
+PAD_VERTICAL = 10
+PAD_HORIZONTAL = 10
+UIPANEL_HEIGHT = SCREEN_HEIGHT - GRID_HEIGHT - PAD_VERTICAL
+UIMENU_WIDTH = SCREEN_WIDTH/3
+UILOG_WIDTH = SCREEN_WIDTH - UIMENU_WIDTH - PAD_HORIZONTAL
+
