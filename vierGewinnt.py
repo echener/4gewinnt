@@ -5,7 +5,7 @@ import pygame_gui
 
 # local files
 import vierGewinntController
-import vierGewinntModel
+from vierGewinntModel import *
 import vierGewinntView
 
 
@@ -20,6 +20,10 @@ PAD_HORIZONTAL = 10
 UIPANEL_HEIGHT = SCREEN_HEIGHT - GRID_HEIGHT - PAD_VERTICAL
 UIMENU_WIDTH = SCREEN_WIDTH/3
 UILOG_WIDTH = SCREEN_WIDTH - UIMENU_WIDTH - PAD_HORIZONTAL
+X_TILES = 7
+Y_TILES = 6
+baseGridY = GRID_HEIGHT - TILE_LENGTH
+baseGridX = (SCREEN_WIDTH-X_TILES*TILE_LENGTH)/2 
 
 PARTICIPANTS = ["Human", "KI"]
 FPS = 60
@@ -37,18 +41,57 @@ player2_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, 
 restart_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+7*30), (UIMENU_WIDTH, 30)), text="Restart", manager=ui_manager)
 log_box = pygame_gui.elements.UITextBox(relative_rect=pygame.Rect((UIMENU_WIDTH+PAD_HORIZONTAL, PAD_VERTICAL+GRID_HEIGHT), (SCREEN_WIDTH-UIMENU_WIDTH-PAD_HORIZONTAL, SCREEN_HEIGHT-PAD_VERTICAL-GRID_HEIGHT)), html_text="", manager=ui_manager)
 
+
+tileEmpty = pygame.image.load("graphics/tileEmpty.png").convert()
+tileRed = pygame.image.load("graphics/tileRed.png").convert()
+tileBlue = pygame.image.load("graphics/tileBlue.png").convert()
+
+
+def draw_grid(grid, screen):
+	tile = tileEmpty
+	for x in range(X_TILES):
+		for y in range(Y_TILES):
+			if grid[x][y] == 1:
+				tile = tileRed
+			elif grid[x][y] == 2:
+				tile = tileBlue
+			else:
+				tile = tileEmpty
+			screen.blit(tile, (baseGridX+TILE_LENGTH*x, baseGridY-	y*TILE_LENGTH))
+
+def validateClick(x, y):
+	xPos = None
+	if x >= baseGridX and x <= baseGridX+TILE_LENGTH*X_TILES and y <= GRID_HEIGHT:
+		xPos = int((x-baseGridX)//TILE_LENGTH)
+		print(x-baseGridX)
+	return xPos
+
+model = vierGewinntModel()
+	
+
 log_box.append_html_text("Welcome to 4 Gewinnt <br>")
 is_running = True
 while is_running:
 	time_delta = clock.tick(FPS) / 1000.0
 	clock.tick(FPS) 
-	for event in pygame.event.get(): 
+	for event in pygame.event.get():
 		if event.type == pygame.QUIT: 
 			is_running = False
+		if event.type == pygame.MOUSEBUTTONDOWN:
+			model.play(validateClick(event.pos[0], event.pos[1]))
+			print(model.getGrid())
+			# print(str(event.pos[0]) + " / " + str(event.pos[1]))
+
+
+	winner = model.checkWinner()
+	if winner != 0:
+		print(str(winner)+ " won")
 	
 	ui_manager.update(time_delta)
 	screen.fill(pygame.Color('#000000'))
 
+	#screen.blit(tileBlue, (100, 100))
+	draw_grid(model.getGrid(), screen)
 
 	ui_manager.draw_ui(screen)
 	pygame.display.flip()
