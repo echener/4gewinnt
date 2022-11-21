@@ -61,17 +61,15 @@ class vierGewinntModel:
 		# diagonal W->E
 		for y in range(3):
 			for x in range(4):
-				print(x)
-				if self._grid != 0:
+				if self._grid[x][y] != 0:
 					if self._grid[x][y] == self._grid[x+1][y+1] == self._grid[x+2][y+2] == self._grid[x+3][y+3]:
 						return self._grid[x][y]
 
 		# diagonal E->W
 		for y in range(3):
-			for x in range(X_TILES-1, 3, -1):
-				print(str(x) + " / " + str(y))
-				if self._grid != 0:
-					if self._grid[x][y] == self._grid[x-1][y-1] == self._grid[x-2][y-2] == self._grid[x-3][y-3]:
+			for x in range(X_TILES-1, 2, -1):
+				if self._grid[x][y] != 0:
+					if self._grid[x][y] == self._grid[x-1][y+1] == self._grid[x-2][y+2] == self._grid[x-3][y+3]:
 						return self._grid[x][y]
 
 
