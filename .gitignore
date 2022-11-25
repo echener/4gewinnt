@@ -244,3 +244,6 @@ tags
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,vim,git,visualstudiocode,kdevelop4,kdiff3,linux
+
+# some Personal stuff
+test.py
