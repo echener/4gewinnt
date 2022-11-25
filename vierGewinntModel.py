@@ -42,8 +42,6 @@ class vierGewinntModel:
 			return False
 
 	def checkWinner(self):
-		print("checking")
-		
 		# horizontal
 		for y in range(Y_TILES):
 			for x in range(X_TILES-3):

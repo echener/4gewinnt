@@ -68,7 +68,6 @@ def validateClick(x, y):
 
 model = vierGewinntModel()
 	
-
 log_box.append_html_text("Welcome to 4 Gewinnt <br>")
 is_running = True
 while is_running:
@@ -77,20 +76,24 @@ while is_running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT: 
 			is_running = False
+		if event.type == pygame_gui.UI_BUTTON_PRESSED:
+			print("hi")
+			if event.ui_element == restart_button:
+				print("pressed")
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			model.play(validateClick(event.pos[0], event.pos[1]))
-			print(model.getGrid())
-			# print(str(event.pos[0]) + " / " + str(event.pos[1]))
+		
 
 
 	winner = model.checkWinner()
-	if winner != 0:
+	if winner != None:
 		print(str(winner)+ " won")
+		log_box.append_html_text("(╯°□°）╯︵ ┻━┻ Player " + str(winner) + " won")
+
 	
 	ui_manager.update(time_delta)
 	screen.fill(pygame.Color('#000000'))
 
-	#screen.blit(tileBlue, (100, 100))
 	draw_grid(model.getGrid(), screen)
 
 	ui_manager.draw_ui(screen)
