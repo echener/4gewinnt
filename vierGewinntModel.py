@@ -70,21 +70,3 @@ class vierGewinntModel:
 					if self._grid[x][y] == self._grid[x-1][y+1] == self._grid[x-2][y+2] == self._grid[x-3][y+3]:
 						return self._grid[x][y]
 	
-	def evaluateGameState(self, grid):
-		# copied from https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
-		# There are better functions, but it's ready made so …
-		evaluationTable = [[3, 4, 5, 5, 4, 3],
-							[4, 6, 8, 8, 6, 4],
-							[5, 8, 11, 11, 8, 5],
-							[7, 10, 13, 13, 10, 7],
-							[5, 8, 11, 11, 8, 5],
-							[4, 6, 8, 8, 6, 4],
-							[3, 4, 5, 5, 4, 3]]
-		sum = 0
-		for x in range(X_TILES):
-			for y in range(Y_TILES):
-				if grid[x][y] == 1:
-					sum += evaluationTable[x][y]
-				elif grid[x][y] == 2:
-					sum -= evaluationTable [x][y]
-		return sum
