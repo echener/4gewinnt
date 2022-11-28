@@ -81,7 +81,7 @@ while is_running:
 			if event.ui_element == restart_button:
 				print("pressed")
 		if event.type == pygame.MOUSEBUTTONDOWN:
-			model.play(validateClick(event.pos[0], event.pos[1]))
+			model.play(validateClick(event.pos[0], event.pos[1]), model.getCurrPlayer())
 		
 
 

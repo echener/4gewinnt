@@ -12,19 +12,21 @@ class vierGewinntModel:
 	def setGrid(self, grid):
 		self._grid = grid
 
-	def play(self, xPos):
-		player = 0
-		if self._move%2 == 0:
-			player = 1
-		else :
-			player = 2
-
+	def play(self, xPos, player):
 		if self._isFileFull(xPos):
 			xPos = None
 
 		if xPos != None:
 			self._grid[xPos][self._returnHighestTile(xPos)] = player
 			self._move = self._move + 1
+
+	def getCurrPlayer(self):
+		player = 0
+		if self._move%2 == 0:
+			player = 1
+		else :
+			player = 2
+		return player
 
 	def _returnHighestTile(self, xPos):
 		y = 0
