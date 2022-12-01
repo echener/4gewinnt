@@ -79,9 +79,8 @@ while is_running:
 		if event.type == pygame.QUIT: 
 			is_running = False
 		if event.type == pygame_gui.UI_BUTTON_PRESSED:
-			print("hi")
 			if event.ui_element == restart_button:
-				print("pressed")
+				model = vierGewinntModel()
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			model.play(validateClick(event.pos[0], event.pos[1]), model.getCurrPlayer())
 		if event.type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
