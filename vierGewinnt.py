@@ -6,7 +6,7 @@ import pygame_gui
 # local files
 import vierGewinntController
 from vierGewinntModel import *
-import vierGewinntView
+from vierGewinntComputer import *
 
 
 # Constants 
@@ -35,7 +35,7 @@ ui_manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # ui_manager
 player1_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL), (UIMENU_WIDTH, 30)), text="Player 1:", manager=ui_manager)
-player1_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+30), (UIMENU_WIDTH, 30)), options_list=PARTICIPANTS, starting_option="Human", manager=ui_manager)
+player1_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+30), (UIMENU_WIDTH, 30)), options_list=["Human"], starting_option="Human", manager=ui_manager)
 player2_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+3*30), (UIMENU_WIDTH, 30)), text="Player 2:", manager=ui_manager)
 player2_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+4*30), (UIMENU_WIDTH, 30)), options_list=PARTICIPANTS, starting_option="KI", manager=ui_manager)
 restart_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+7*30), (UIMENU_WIDTH, 30)), text="Restart", manager=ui_manager)
@@ -67,6 +67,8 @@ def validateClick(x, y):
 	return xPos
 
 model = vierGewinntModel()
+aiPlayer = vierGewinntStupidComputer(2)
+aiPlaying = True
 	
 log_box.append_html_text("Welcome to 4 Gewinnt <br>")
 is_running = True
@@ -82,9 +84,18 @@ while is_running:
 				print("pressed")
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			model.play(validateClick(event.pos[0], event.pos[1]), model.getCurrPlayer())
-		
+		if event.type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
+			if event.text == "Human":
+				aiPlaying = False
+			else:
+				aiPlaying = True
+		ui_manager.process_events(event)
 
-
+	# if I understand pygame correctly this shouldn't allow a double play with double click
+	# because the events are not executed separatly
+	if model.getCurrPlayer() == 2 and aiPlaying == True:
+		model.play(aiPlayer.makeAMove(model.getGrid()), 2)
+	
 	winner = model.checkWinner()
 	if winner != None:
 		print(str(winner)+ " won")

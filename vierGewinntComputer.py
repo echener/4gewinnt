@@ -46,7 +46,7 @@ class vierGewinntStupidComputer:
 		for x in range(7):
 			self._model.play(x, self._sign)
 			node = vierGewinntNode(self._model.getGrid(), x, None)
-			if True:
+			if True:	# TODO check if grid changed at all (full column)
 				winner = self._model.checkWinner()
 				if winner == 1:
 					node.setScore(500)
