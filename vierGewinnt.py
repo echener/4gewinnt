@@ -34,9 +34,10 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 ui_manager = pygame_gui.UIManager((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # ui_manager
-player1_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL), (UIMENU_WIDTH, 30)), text="Player 1:", manager=ui_manager)
-player1_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+30), (UIMENU_WIDTH, 30)), options_list=["Human"], starting_option="Human", manager=ui_manager)
-player2_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+3*30), (UIMENU_WIDTH, 30)), text="Player 2:", manager=ui_manager)
+player1_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL), (UIMENU_WIDTH, 30)), text="Player 1 Red:", manager=ui_manager)
+player1_desc = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+30), (UIMENU_WIDTH, 30)), text="Human (You)", manager=ui_manager)
+#player1_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+30), (UIMENU_WIDTH, 30)), options_list=["Human"], starting_option="Human", manager=ui_manager)
+player2_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+3*30), (UIMENU_WIDTH, 30)), text="Player 2 Blue:", manager=ui_manager)
 player2_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+4*30), (UIMENU_WIDTH, 30)), options_list=PARTICIPANTS, starting_option="KI", manager=ui_manager)
 restart_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+7*30), (UIMENU_WIDTH, 30)), text="Restart", manager=ui_manager)
 log_box = pygame_gui.elements.UITextBox(relative_rect=pygame.Rect((UIMENU_WIDTH+PAD_HORIZONTAL, PAD_VERTICAL+GRID_HEIGHT), (SCREEN_WIDTH-UIMENU_WIDTH-PAD_HORIZONTAL, SCREEN_HEIGHT-PAD_VERTICAL-GRID_HEIGHT)), html_text="", manager=ui_manager)
@@ -69,6 +70,7 @@ def validateClick(x, y):
 model = vierGewinntModel()
 aiPlayer = vierGewinntStupidComputer(2)
 aiPlaying = True
+gameOver = False
 	
 log_box.append_html_text("Welcome to 4 Gewinnt <br>")
 is_running = True
@@ -97,7 +99,6 @@ while is_running:
 	
 	winner = model.checkWinner()
 	if winner != None:
-		print(str(winner)+ " won")
 		log_box.append_html_text("(╯°□°）╯︵ ┻━┻ Player " + str(winner) + " won")
 
 	

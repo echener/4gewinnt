@@ -71,8 +71,6 @@ class vierGewinntStupidComputer:
 		print(str(bestScore)+" at col "+str(bestCol))
 		return bestCol
 		
-
-
 	def evaluateGameState(self, grid):
 		# copied from https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
 		# There are better functions, but it's ready made so …
@@ -91,4 +89,5 @@ class vierGewinntStupidComputer:
 				elif grid[x][y] == 2:
 					sum -= evaluationTable [x][y]
 		return sum
+		
 	
