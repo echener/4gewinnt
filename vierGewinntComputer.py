@@ -90,4 +90,57 @@ class vierGewinntStupidComputer:
 					sum -= evaluationTable [x][y]
 		return sum
 		
-	
+class vierGewinntMinMaxComputer:
+	def __init__(self, sign):
+		self._model = vierGewinntModel()
+		self._sign = sign
+
+	def makeAMove(self, grid, searchDepth):
+		# create the tree
+		tmp_model = vierGewinntModel()
+		tree = vierGewinntNode(grid, None, None)
+		head = tree
+		for i in range(searchDepth):
+			for ii in range(X_TILES):
+				tmp_model.setGrid(copy.deepcopy(grid))
+				tmp_model.play(ii, self._sign)
+				head.addChild(vierGewinntNode(tmp_model.getGrid(), ii, head))
+
+	def addChildren(self, node, grid, depth):
+		head = node
+		tmp_model = vierGewinntModel()
+		for poss in range(X_TILES):
+			tmp_model.setGrid(copy.deepcopy(grid))
+			tmp_model.play(poss, self._sign)
+			head.addChild(vierGewinntNode(tmp_model.getGrid(), poss, head))
+			if 0 < depth:
+				self.addChildren((head.getChildren())[poss], tmp_model.getGrid(), depth-1)
+
+
+	# 500 means won/lost, positive means 1 is winning; neg 2 is winning
+	def evaluateGameState(self, grid):
+		eval_model = vierGewinntModel()
+		eval_model.setGrid(copy.deepcopy(grid))
+		winner = eval_model.checkWinner()
+		if winner == 1:
+			return 500
+		elif winner == 2:
+			return -500
+		
+		# copied from https://softwareengineering.stackexchange.com/questions/263514/why-does-this-evaluation-function-work-in-a-connect-four-game-in-java
+		# There are better functions, but it's ready made so …
+		evaluationTable = [[3, 4, 5, 5, 4, 3],
+							[4, 6, 8, 8, 6, 4],
+							[5, 8, 11, 11, 8, 5],
+							[7, 10, 13, 13, 10, 7],
+							[5, 8, 11, 11, 8, 5],
+							[4, 6, 8, 8, 6, 4],
+							[3, 4, 5, 5, 4, 3]]
+		sum = 0
+		for x in range(X_TILES):
+			for y in range(Y_TILES):
+				if grid[x][y] == 1:
+					sum += evaluationTable[x][y]
+				elif grid[x][y] == 2:
+					sum -= evaluationTable [x][y]
+		return sum
