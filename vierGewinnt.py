@@ -8,7 +8,6 @@ import vierGewinntController
 from vierGewinntModel import *
 from vierGewinntComputer import *
 
-
 # Constants 
 SCREEN_WIDTH = 900
 TILE_LENGTH = 100
@@ -41,7 +40,6 @@ player2_text = pygame_gui.elements.UILabel(relative_rect=pygame.Rect((0, GRID_HE
 player2_drop = pygame_gui.elements.UIDropDownMenu(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+4*30), (UIMENU_WIDTH, 30)), options_list=PARTICIPANTS, starting_option="KI", manager=ui_manager)
 restart_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, GRID_HEIGHT+PAD_VERTICAL+7*30), (UIMENU_WIDTH, 30)), text="Restart", manager=ui_manager)
 log_box = pygame_gui.elements.UITextBox(relative_rect=pygame.Rect((UIMENU_WIDTH+PAD_HORIZONTAL, PAD_VERTICAL+GRID_HEIGHT), (SCREEN_WIDTH-UIMENU_WIDTH-PAD_HORIZONTAL, SCREEN_HEIGHT-PAD_VERTICAL-GRID_HEIGHT)), html_text="", manager=ui_manager)
-
 
 tileEmpty = pygame.image.load("graphics/tileEmpty.png").convert()
 tileRed = pygame.image.load("graphics/tileRed.png").convert()
@@ -101,11 +99,9 @@ while is_running:
 	if winner != None:
 		log_box.append_html_text("(╯°□°）╯︵ ┻━┻ Player " + str(winner) + " won")
 
-	
 	ui_manager.update(time_delta)
 	screen.fill(pygame.Color('#000000'))
-
+	
 	draw_grid(model.getGrid(), screen)
-
 	ui_manager.draw_ui(screen)
 	pygame.display.flip()
