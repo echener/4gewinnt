@@ -73,6 +73,22 @@ class vierGewinntStupidComputer:
 					node.setScore(475)
 				moves.append(node)
 			self._model.setGrid(copy.deepcopy(grid))
+
+		# prevent the player from making a "fork" at the beginning
+		if True:
+			if self._model.getGrid()[2][0] == 1 or self._model.getGrid()[3][0] == 1 or self._model.getGrid()[4][0] == 1:
+				if self._model.getGrid()[3][0] == 0:
+					node = vierGewinntNode(self._model.getGrid(), 3, None)
+					node.setScore(-450)
+					moves.append(node)
+				elif self._model.getGrid()[2][0] == 0:
+					node = vierGewinntNode(self._model.getGrid(), 2, None)
+					node.setScore(-450)
+					moves.append(node)
+				elif self._model.getGrid()[4][0] == 0:
+					node = vierGewinntNode(self._model.getGrid(), 4, None)
+					node.setScore(-450)
+					moves.append(node)
 		
 		# search the best move
 		bestScore = 0
