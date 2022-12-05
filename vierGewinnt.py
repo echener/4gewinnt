@@ -82,7 +82,8 @@ while is_running:
 			if event.ui_element == restart_button:
 				model = vierGewinntModel()
 		if event.type == pygame.MOUSEBUTTONDOWN:
-			model.play(validateClick(event.pos[0], event.pos[1]), model.getCurrPlayer())
+			if not gameOver:
+				model.play(validateClick(event.pos[0], event.pos[1]), model.getCurrPlayer())
 		if event.type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
 			if event.text == "Human":
 				aiPlaying = False
@@ -96,8 +97,13 @@ while is_running:
 		model.play(aiPlayer.makeAMove(model.getGrid()), 2)
 	
 	winner = model.checkWinner()
-	if winner != None:
+	if winner != None and not gameOver:
+		gameOver = True
 		log_box.append_html_text("(╯°□°）╯︵ ┻━┻ Player " + str(winner) + " won")
+
+	if model.getMoves() >= X_TILES * Y_TILES and not gameOver:
+		gameOver = True
+		log_box.append_html_text("Tie, no one won")
 
 	ui_manager.update(time_delta)
 	screen.fill(pygame.Color('#000000'))

@@ -27,6 +27,9 @@ class vierGewinntModel:
 		else :
 			player = 2
 		return player
+	
+	def getMoves(self):
+		return self._move
 
 	def _returnHighestTile(self, xPos):
 		y = 0
