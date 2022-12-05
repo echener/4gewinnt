@@ -60,18 +60,19 @@ class vierGewinntStupidComputer:
 		# try to find possible connect fours for the ennemy
 		self._model.setGrid(copy.deepcopy(grid))
 		sign = 1
-		if self._sign == 2:
-			sign = self._sign
+		if self._sign == 1:
+			sign = 2
 		for x in range(7):
 			self._model.play(x, sign)
 			node = vierGewinntNode(self._model.getGrid(), x, None)
 			winner = self._model.checkWinner()
 			if winner == sign:
 				if winner == 1:
-					node.setScore(475)
-				else:
 					node.setScore(-475)
+				else:
+					node.setScore(475)
 				moves.append(node)
+			self._model.setGrid(copy.deepcopy(grid))
 		
 		# search the best move
 		bestScore = 0
