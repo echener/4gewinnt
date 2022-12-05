@@ -91,11 +91,6 @@ while is_running:
 			else:
 				aiPlaying = True
 		ui_manager.process_events(event)
-
-	# if I understand pygame correctly this shouldn't allow a double play with double click
-	# because the events are not executed separatly
-	if model.getCurrPlayer() == 2 and aiPlaying == True:
-		model.play(aiPlayer.makeAMove(model.getGrid()), 2)
 	
 	winner = model.checkWinner()
 	if winner != None and not gameOver:
@@ -105,6 +100,11 @@ while is_running:
 	if model.getMoves() >= X_TILES * Y_TILES and not gameOver:
 		gameOver = True
 		log_box.append_html_text("Tie, no one won <br>")
+
+	# if I understand pygame correctly this shouldn't allow a double play with double click
+	# because the events are not executed separatly
+	if model.getCurrPlayer() == 2 and aiPlaying == True and not gameOver:
+		model.play(aiPlayer.makeAMove(model.getGrid()), 2)
 
 	ui_manager.update(time_delta)
 	screen.fill(pygame.Color('#000000'))
