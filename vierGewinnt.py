@@ -99,7 +99,7 @@ while is_running:
 	winner = model.checkWinner()
 	if winner != None and not gameOver:
 		gameOver = True
-		log_box.append_html_text("(╯°□°）╯︵ ┻━┻ Player " + str(winner) + " won")
+		log_box.append_html_text("Congratulations Player " + str(winner) + "  you won")
 
 	if model.getMoves() >= X_TILES * Y_TILES and not gameOver:
 		gameOver = True
