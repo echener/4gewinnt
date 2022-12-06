@@ -40,21 +40,20 @@ class vierGewinntStupidComputer:
 
 	def makeAMove(self, grid):
 		# generate the possibilites for the next move
-		baseGrid = copy.deepcopy(grid)
-		self._model.setGrid(baseGrid)
+		self._model.setGrid(copy.deepcopy(grid))
 		moves = []
 		for x in range(7):
 			self._model.play(x, self._sign)
 			node = vierGewinntNode(self._model.getGrid(), x, None)
-			if True:	# TODO check if grid changed at all (full column)
-				winner = self._model.checkWinner()
-				if winner == 1:
-					node.setScore(500)
-				elif winner == 2:
-					node.setScore(-500)
-				else:
-					node.setScore(self.evaluateGameState(node.getGrid()))
-				moves.append(node)
+				
+			winner = self._model.checkWinner()  # TODO check if grid changed at all (full column)
+			if winner == 1:
+				node.setScore(500)
+			elif winner == 2:
+				node.setScore(-500)
+			else:
+				node.setScore(self.evaluateGameState(node.getGrid()))
+			moves.append(node)
 			self._model.setGrid(copy.deepcopy(grid))
 
 		# try to find possible connect fours for the ennemy
@@ -75,20 +74,19 @@ class vierGewinntStupidComputer:
 			self._model.setGrid(copy.deepcopy(grid))
 
 		# prevent the player from making a "fork" at the beginning
-		if True:
-			if self._model.getGrid()[2][0] == 1 or self._model.getGrid()[3][0] == 1 or self._model.getGrid()[4][0] == 1:
-				if self._model.getGrid()[3][0] == 0:
-					node = vierGewinntNode(self._model.getGrid(), 3, None)
-					node.setScore(-450)
-					moves.append(node)
-				elif self._model.getGrid()[2][0] == 0:
-					node = vierGewinntNode(self._model.getGrid(), 2, None)
-					node.setScore(-450)
-					moves.append(node)
-				elif self._model.getGrid()[4][0] == 0:
-					node = vierGewinntNode(self._model.getGrid(), 4, None)
-					node.setScore(-450)
-					moves.append(node)
+		if self._model.getGrid()[2][0] == 1 or self._model.getGrid()[3][0] == 1 or self._model.getGrid()[4][0] == 1:
+			if self._model.getGrid()[3][0] == 0:
+				node = vierGewinntNode(self._model.getGrid(), 3, None)
+				node.setScore(-450)
+				moves.append(node)
+			elif self._model.getGrid()[2][0] == 0:
+				node = vierGewinntNode(self._model.getGrid(), 2, None)
+				node.setScore(-450)
+				moves.append(node)
+			elif self._model.getGrid()[4][0] == 0:
+				node = vierGewinntNode(self._model.getGrid(), 4, None)
+				node.setScore(-450)
+				moves.append(node)
 		
 		# search the best move
 		bestScore = 0

@@ -4,7 +4,6 @@ import pygame
 import pygame_gui
 
 # local files
-import vierGewinntController
 from vierGewinntModel import *
 from vierGewinntComputer import *
 
@@ -62,7 +61,6 @@ def validateClick(x, y):
 	xPos = None
 	if x >= baseGridX and x <= baseGridX+TILE_LENGTH*X_TILES and y <= GRID_HEIGHT:
 		xPos = int((x-baseGridX)//TILE_LENGTH)
-		print(x-baseGridX)
 	return xPos
 
 model = vierGewinntModel()
