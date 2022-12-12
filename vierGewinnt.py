@@ -84,7 +84,8 @@ while is_running:
 		if event.type == pygame_gui.UI_BUTTON_PRESSED:
 			if event.ui_element == restart_button:
 				gameOver = False
-				model = vierGewinntModel()
+				model = vierGewinntModel(args.record)
+				log_box.append_html_text("--- RESTART --- <br>")
 		if event.type == pygame.MOUSEBUTTONDOWN:
 			if not gameOver:
 				model.play(validateClick(event.pos[0], event.pos[1]), model.getCurrPlayer())
