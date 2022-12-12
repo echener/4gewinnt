@@ -45,7 +45,7 @@ class vierGewinntStupidComputer:
 		for x in range(7):
 			self._model.play(x, self._sign)
 			node = vierGewinntNode(self._model.getGrid(), x, None)
-				
+									
 			winner = self._model.checkWinner()  # TODO check if grid changed at all (full column)
 			if winner == 1:
 				node.setScore(500)
@@ -99,7 +99,6 @@ class vierGewinntStupidComputer:
 				bestScore = node.getScore()*prefix
 				bestCol = node.getCol()
 		
-		print(str(bestScore)+" at col "+str(bestCol))
 		return bestCol
 		
 	def evaluateGameState(self, grid):

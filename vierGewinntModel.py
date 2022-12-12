@@ -3,7 +3,7 @@ Y_TILES = 6
 
 class vierGewinntModel:
 	def __init__(self, record: bool):
-		self._grid = [[0 for x in range(6)] for y in range(7)]
+		self._grid = [[0 for x in range(Y_TILES)] for y in range(X_TILES)]
 		self._move = 0
 		self._record = record
 		if not record: 
