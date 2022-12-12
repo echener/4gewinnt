@@ -35,7 +35,7 @@ class vierGewinntNode:
 # It mistreats the vierGewinntNode class :(
 class vierGewinntStupidComputer:
 	def __init__(self, playerSign):
-		self._model = vierGewinntModel()
+		self._model = vierGewinntModel(False)
 		self._sign = playerSign
 
 	def makeAMove(self, grid):

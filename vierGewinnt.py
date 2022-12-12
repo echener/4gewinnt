@@ -2,10 +2,15 @@
 
 import pygame
 import pygame_gui
+import argparse
 
 # local files
 from vierGewinntModel import *
 from vierGewinntComputer import *
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--record", help="Writes log of played moves in moves.csv", action="store_true")
+args = parser.parse_args()
 
 # Constants 
 SCREEN_WIDTH = 900
@@ -63,7 +68,7 @@ def validateClick(x, y):
 		xPos = int((x-baseGridX)//TILE_LENGTH)
 	return xPos
 
-model = vierGewinntModel()
+model = vierGewinntModel(args.record)
 aiPlayer = vierGewinntStupidComputer(2)
 aiPlaying = True
 gameOver = False

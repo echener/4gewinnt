@@ -2,9 +2,15 @@ X_TILES = 7
 Y_TILES = 6
 
 class vierGewinntModel:
-	def __init__(self):
+	def __init__(self, record: bool):
 		self._grid = [[0 for x in range(6)] for y in range(7)]
 		self._move = 0
+		self._record = record
+		if not record: 
+			return
+		self._logFile = open("moves.csv", "w")
+		self._logFile.write("# Moves Player 1, Moves Player 2\n")
+		self._logFile.flush()
 
 	def getGrid(self):
 		return self._grid
@@ -19,6 +25,13 @@ class vierGewinntModel:
 		if xPos != None:
 			self._grid[xPos][self._returnHighestTile(xPos)] = player
 			self._move = self._move + 1
+			if self._record:
+				if player == 1:
+					self._logFile.write(str(xPos) + ", ")
+				else:
+					self._logFile.write(str(xPos) + "\n")
+				self._logFile.flush()
+		
 
 	def getCurrPlayer(self):
 		player = 0
